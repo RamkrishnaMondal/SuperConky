@@ -1,0 +1,90 @@
+#############
+background no
+use_xft yes
+xftfont 123:size=8
+xftalpha 0.1
+update_interval 1.0
+total_run_times 0
+own_window yes
+own_window_class Conky
+own_window_type normal
+own_window_transparent yes
+#own_window_argb_visual  yes
+#own_window_argb_value 180
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 400 5
+maximum_width 300
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color gray
+default_shade_color red
+default_outline_color green
+alignment top_right
+gap_x 30
+gap_y 30
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 1
+override_utf8_locale yes
+use_spacer right
+
+
+TEXT
+## CLOCK & DATE ##
+${color DarkSlateGray}${hr 2}
+${font Digitalk:size=55}$alignc${color #00ffff}${time %I:%M:%S}${font}
+${color DarkSlateGray}${hr 2}
+${font Arial:bold:size=10}${color #adff2f}$nodename $alignr${time %A %d %B %Y}
+## OS INFO ##
+${font Arial:bold:size=10}${color Tan1}OS ${color DarkSlateGray}${hr 2}
+${color ff6600}Release Version $alignr ${exec cat /etc/issue.net}
+Distribution $alignr ${exec lsb_release -ds}
+$sysname $alignc $kernel $alignr $machine
+## SYSTEM info ##
+${font Arial:bold:size=10}${color Tan1}SYSTEM ${color DarkSlateGray} ${hr 2}
+$font${color ffffff}Frequency $alignr ${freq_g cpu0}Ghz
+Uptime $alignr ${uptime}
+File System $alignr ${fs_type}
+## CPU info ##
+${font Arial:bold:size=10}${color Tan1}CPU ${color DarkSlateGray}${hr 2}
+${font Arial:bold:size=9}${color #099FFF}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq}
+
+${font}CPU1  ${cpu cpu1}% ${cpubar cpu1}
+CPU2  ${cpu cpu2}% ${cpubar cpu2}
+## MOTHER BOARD INFO ##
+${font Arial:bold:size=10}${color Tan1}MOTHER BOARD ${color DarkSlateGray}${hr 2}
+${color neon}Vendor $alignr ${exec cat /sys/devices/virtual/dmi/id/board_vendor}
+${color neon}Model $alignr ${exec cat /sys/devices/virtual/dmi/id/board_name}
+## MEMORY INFO ##
+${font Arial:bold:size=10}${color Tan1}MEMORY ${color DarkSlateGray}${hr 2}
+$font${color FFFF00}Used $alignc $mem / $memmax $alignr $memperc%
+$membar
+## HDD INFO ##
+${font Arial:bold:size=10}${color Tan1}HDD ${color DarkSlateGray}${hr 2}
+${color #9900FF}Vendor $alignr ${exec hddtemp /dev/sda| cut -c 10-28}
+$font${color #9900FF}Home $alignc ${fs_used /home} / ${fs_size /home} $alignr ${fs_free_perc /home}%
+${fs_bar /home}
+## NETWORK INFO ##
+${font Arial:bold:size=10}${color Tan2}NETWORK ${color DarkSlateGray}${hr 2}${font}
+#${color #00FF00}Public IP ${alignr}${curl ifconfig.me}
+${color #00FF00}Down-Speed: ${downspeed eth0}/s$alignr${color #00FF00}Up-Speed: ${upspeed eth0}/s
+${downspeedgraph eth0 25,120 00ff00 00ff00 600} ${alignr}${upspeedgraph eth0 25,120 ff0000 ff0000 600}
+Downloaded: ${totaldown eth0} ${alignr} Uploaded: ${totalup eth0}
+## TEMPERATURE INFO ##
+${font Arial:bold:size=10}${color Tan1}TEMPERATURES ${color DarkSlateGray}${hr 2}
+$font${color #FF0099}CPU1  $alignr ${exec sensors | grep 'Core 0' | awk '{print $3}' | cut -c2-3}°C
+CPU2  $alignr ${exec sensors | grep 'Core 1' | awk '{print $3}' | cut -c2-3}°C
+HDD  $alignr ${exec hddtemp /dev/sda| cut -c 35-40}
+## PROCESS INFO ##
+${font Arial:bold:size=10}${color Tan1}TOP PROCESSES ${color DarkSlateGray}${hr 2}
+$font${color ffffff}NAME $alignc CPU % $alignr MEM %
+$font${color #FF0000}${top name 1} $alignc ${top cpu 1} $alignr ${top mem 1} %
+$font${top name 2} $alignc ${top cpu 2} $alignr ${top mem 2} %
+$font${top_mem name 3} $alignc ${top cpu 3} $alignr ${top mem 3} %
+$font${top_mem name 4} $alignc ${top cpu 4} $alignr ${top mem 4} %
+${color DarkSlateGray}${hr 2}
+########
