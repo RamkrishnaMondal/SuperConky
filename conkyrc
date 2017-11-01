@@ -30,7 +30,7 @@ uppercase no
 cpu_avg_samples 2
 net_avg_samples 1
 override_utf8_locale yes
-use_spacer right
+use_spacer no
 
 
 TEXT
@@ -52,9 +52,9 @@ File System $alignr ${fs_type}
 ## CPU info ##
 ${font Arial:bold:size=10}${color Tan1}CPU ${color DarkSlateGray}${hr 2}
 ${font Arial:bold:size=9}${color #099FFF}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq}
-
 ${font}CPU1  ${cpu cpu1}% ${cpubar cpu1}
 CPU2  ${cpu cpu2}% ${cpubar cpu2}
+CPU Fan Speed: $alignr${hwmon 1 fan 2} RPM
 ## MOTHER BOARD INFO ##
 ${font Arial:bold:size=10}${color Tan1}MOTHER BOARD ${color DarkSlateGray}${hr 2}
 ${color neon}Vendor $alignr ${exec cat /sys/devices/virtual/dmi/id/board_vendor}
@@ -79,6 +79,7 @@ ${font Arial:bold:size=10}${color Tan1}TEMPERATURES ${color DarkSlateGray}${hr 2
 $font${color #FF0099}CPU1  $alignr ${exec sensors | grep 'Core 0' | awk '{print $3}' | cut -c2-3}°C
 CPU2  $alignr ${exec sensors | grep 'Core 1' | awk '{print $3}' | cut -c2-3}°C
 HDD  $alignr ${exec hddtemp /dev/sda| cut -c 35-40}
+MOBO    $alignr ${hwmon 1 temp 2}°C
 ## PROCESS INFO ##
 ${font Arial:bold:size=10}${color Tan1}TOP PROCESSES ${color DarkSlateGray}${hr 2}
 $font${color ffffff}NAME $alignc CPU % $alignr MEM %
